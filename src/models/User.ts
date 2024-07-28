@@ -13,6 +13,7 @@ interface User{
     availability: number[];
     photo: string;
     is_visible: boolean;
+    gender: number;
 }
 
 export default User;

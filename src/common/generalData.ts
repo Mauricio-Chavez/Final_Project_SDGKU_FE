@@ -20,4 +20,9 @@ export const generalData = {
     { value: 'Friday', label: 'Friday' },
     { value: 'Saturday', label: 'Saturday' }
   ],
+  gender:[
+    {value: 0,label: 'Male'},
+    {value: 1,label: 'Female'},
+    {value: 2,label: 'I prefer not to say'}
+  ]
 }

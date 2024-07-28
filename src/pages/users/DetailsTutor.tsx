@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useGlobalState from "../../context/GlobalState";
 import authService from "../../service/auth.service";
 import { useParams } from 'react-router-dom';
 import { generalData } from "../../common/generalData";
@@ -8,14 +7,12 @@ import {
   PopoverHandler,
   PopoverContent,
   Button,
-  Input,
   Typography,
 } from "@material-tailwind/react";
 import BookingForm from "../../components/BookingForm";
 
 const DetailsTutor = () => {
   const { id } = useParams();
-  const { user } = useGlobalState();
   const [tutor, setTutor] = useState<any>([]);
 
   async function getTutor() {

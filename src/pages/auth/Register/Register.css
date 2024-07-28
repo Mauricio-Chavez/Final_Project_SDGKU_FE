@@ -63,10 +63,17 @@
   border-bottom: #721c24 2px solid;
   font-weight: 600;
   font-style: italic;
-  margin-bottom: 1rem;
-  width: 40%;
+  margin-bottom: 2rem;
+  width: 60%;
   margin-left: auto;
   margin-right: auto;
 }
+
+.user-register .btn-register{
+  background-color: #4b0007;
+  width: 40%;
+  margin-top: 1rem;
+}
+
 
 

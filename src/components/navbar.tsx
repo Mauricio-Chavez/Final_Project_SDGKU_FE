@@ -17,7 +17,6 @@ const Navbar: React.FC = () => {
         token ? null : <Link to="/register">Register</Link>
       }
       <Link to="/profile">Profile</Link>
-      <Link to="/upload-certifications">Upload Certifications</Link>
       <Link to="/bookings">Bookings</Link>
       <Button
         placeholder=''

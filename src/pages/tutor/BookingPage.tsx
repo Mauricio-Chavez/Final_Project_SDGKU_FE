@@ -1,19 +1,9 @@
 import './Booking.css';
 import BookingCard from '../../components/BookingCard';
-import {
-  Popover,
-  PopoverHandler,
-  PopoverContent,
-  Button,
-  Input,
-  Typography,
-} from "@material-tailwind/react";
-import useGlobalState from '../../context/GlobalState';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Booking from '../../models/Booking';
 import TutorService from '../../service/tutor/TutorService';
-import BookingForm from '../../components/BookingForm';
+
 
 const BookingPage = () => {
   const [bookings, setBooking] = useState<Booking[]>([]);

@@ -31,6 +31,11 @@ function App() {
     return <h1>Admin</h1>;
   };
 
+  const renderCertifications = () => {
+    if (user?.role === 1) return <UploadCertifications />;
+    if (user?.role === 0) return <Home/>;
+    return <h1>Admin</h1>;
+  };
   const renderNav = () => {
     if (user?.role === 1) return <SidebarTutor />; else return <Navbar />;
   };
@@ -47,7 +52,7 @@ function App() {
           <Route path='/profile' element={token ? <Profile /> : <Login />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/upload-certifications' element={token ? <UploadCertifications /> : <Login />} />
+          <Route path='/upload-certifications' element={token ? renderCertifications() : <Login />} />
           <Route path='/view-certifications' element={token ? <ViewCertifications /> : <Login />} />
           <Route path='/bookings' element={token ? <Booking /> : <Login />} />
           <Route path='/details-tutor/:id' element={token ? <DetailsTutor /> : <Login />} />
