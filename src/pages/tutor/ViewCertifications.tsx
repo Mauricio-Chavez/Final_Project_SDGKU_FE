@@ -5,6 +5,7 @@ import TutorService from '../../service/tutor/TutorService';
 import useGlobalState from '../../context/GlobalState';
 
 import './ViewCertifications.css';
+import { Typography } from '@material-tailwind/react';
 
 const ViewCertifications = () => {
   const { user, tokenExists } = useGlobalState();
@@ -12,6 +13,7 @@ const ViewCertifications = () => {
   const [certifications, setCertifications] = useState<Certifications[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const pdfPreviewRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const ViewCertifications = () => {
           setCertifications(updatedData);
         } catch (error) {
           console.error('Fetch certifications error', error);
+          setError('Error fetching certifications');
         } finally {
           setLoading(false);
         }
@@ -39,14 +42,6 @@ const ViewCertifications = () => {
     };
     fetchCertifications();
   }, [tokenExists, user, id]);
-
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  if (error) {
-    return <h1>{error}</h1>;
-  }
 
   const renderPreview = (fileUrl: string) => {
     const fileExtension = fileUrl.split('.').pop()?.toLowerCase();
@@ -64,32 +59,44 @@ const ViewCertifications = () => {
       displayPdfPreview(fileUrl);
       return (
         <div className='pdf-container'>
-          <iframe ref={pdfPreviewRef} id="pdf-preview" style={{ height: '500px', width: '100%' }}></iframe>
+          <iframe ref={pdfPreviewRef} id="pdf-preview"></iframe>
         </div>
       );
     } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension || '')) {
-      return <img src={fileUrl} alt="Certification" style={{ maxWidth: '600px' }} />;
+      return <img src={fileUrl} alt="Certification" style={{ maxWidth: '100%' }} />;
     } else {
       return <a href={fileUrl} target="_blank" rel="noopener noreferrer">Download</a>;
     }
   };
 
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+
   return (
     <div className='view-certifications'>
-      <h1>View Certifications</h1>
-      <div className='certificate'>
-        {certifications.length === 0 ? (
-          <p>No certifications found</p>
-        ) : (
-          <ul>
-            {certifications.map((cert) => (
-              <li key={cert.id}>
-                <h2>{cert.name}</h2>
-                {renderPreview(cert.route_file)}
-              </li>
-            ))}
-          </ul>
-        )}
+      <Typography variant="h1" className='title' placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} > Personal Information</Typography>
+      <div className='certification-container'>
+        <div className='certification-list'>
+          {certifications.length === 0 ? (
+            <p>No certifications found</p>
+          ) : (
+            <ul>
+              {certifications.map((cert) => (
+                <li key={cert.id} onClick={() => setSelectedFile(cert.route_file)}>
+                  <h2>{cert.name}</h2>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className='certification-preview'>
+          {selectedFile ? renderPreview(selectedFile) : <p>Select a certification to preview</p>}
+        </div>
       </div>
     </div>
   );

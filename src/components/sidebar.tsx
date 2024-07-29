@@ -1,15 +1,33 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useGlobalState from "../context/GlobalState";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-
+import { faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SidebarTutor: React.FC = () => {
   const { logout, user } = useGlobalState();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  }
+
   return (
     <div>
-      <aside id="logo-sidebar" className="top-0 left-0 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-        <div className="h-full px-3 py-4 overflow-y-auto bg-[#4b0007]">
+      <button
+        className={`fixed top-4 rounded-md left-4 p-2 text-white bg-[#4b0007] z-50 sm:hidden ${sidebarOpen ? 'block' : 'block'}`}
+        onClick={toggleSidebar}
+        aria-label="Toggle Sidebar"
+      >
+        <FontAwesomeIcon icon={sidebarOpen ? faTimes : faBars} size="lg" />
+      </button>
+
+      <aside
+        id="logo-sidebar"
+        className={`top-0 left-0 w-64 h-screen transition-transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0 fixed sm:relative z-40 bg-[#4b0007]`}
+        aria-label="Sidebar"
+      >
+        <div className="h-full px-3 py-4 overflow-y-auto">
           <Link to='profile' className="flex items-center mb-5 justify-center gap-5">
             {
               user?.photo ? <img src={`http://localhost:8000/${user?.photo}`} className="h-6 me-3 sm:h-7 rounded-full" alt="Profile Photo" /> : <div className='bg-[#ECECEC] rounded-full w-7 h-7'><FontAwesomeIcon icon={faUser} className="edit-icon" size="1x" color='#b5b5b5' /></div>
@@ -31,7 +49,6 @@ const SidebarTutor: React.FC = () => {
                   <path fillRule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clipRule="evenodd" />
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
-                {/* <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span> */}
               </Link>
             </li>
             <li>
@@ -40,7 +57,6 @@ const SidebarTutor: React.FC = () => {
                   <path fillRule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Z" clipRule="evenodd" />
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap">Upload Certifications</span>
-                {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span> */}
               </Link>
             </li>
             <li>
