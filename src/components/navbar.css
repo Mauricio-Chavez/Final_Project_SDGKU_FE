@@ -1,0 +1,92 @@
+header {
+  background-color: #4b0007;
+  color: #fff;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  display: flex;
+  padding: 0, 2%;
+}
+
+.logo {
+  width: 20%;
+}
+
+.nav-menu {
+  width: 80%;
+}
+
+.nav-menu a {
+  margin: 2%;
+  padding: 1% 2%;
+}
+
+.nav-options {
+  width: 100%;
+}
+
+.center-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.a {
+  display: flex;
+}
+
+#chek-option,
+.nav-btn {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  header {
+    flex-direction: row;
+    height: max-content;
+    padding: 2%;
+  }
+
+  .center-row {
+    justify-content: space-between;
+  }
+  .nav-menu {
+    display: flex;
+    width: auto;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .nav-btn {
+    display: inline-flex;
+  }
+  .nav-options {
+    flex-direction: column;
+    background-color: #4b0007;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .nav-btn span {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    margin: 6px auto;
+  }
+
+  #chek-option:not(:checked) ~ .nav-options {
+    height: 0;
+    overflow: hidden;
+  }
+  #chek-option:checked ~ .nav-options {
+    height: auto;
+    overflow: auto;
+  }
+}
