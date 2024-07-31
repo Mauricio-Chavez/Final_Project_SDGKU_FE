@@ -89,7 +89,7 @@
   padding: 0 0.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .meetings-list {
     position: fixed;
     bottom: 0;

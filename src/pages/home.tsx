@@ -5,7 +5,6 @@ import TutorCard from "../components/TutorCard";
 import './home.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { select } from "@material-tailwind/react";
 import { generalData } from './../common/generalData';
 import TutorService from "../service/tutor/TutorService";
 import Booking from "../models/Booking";
@@ -13,7 +12,6 @@ import BookingCard from './../components/BookingCard';
 
 
 const Home: React.FC = () => {
-  const [token, setToken] = useState<string | null>(null);
   const { user } = useGlobalState();
   const [tutors, setTutors] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");

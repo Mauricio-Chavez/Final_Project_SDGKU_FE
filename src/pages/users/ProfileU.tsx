@@ -130,36 +130,6 @@ const ProfileU = () => {
     }
   };
 
-  const handleAvailabilityChange = (day: string, hours: string) => {
-    setAvailability({
-      ...availability,
-      [day]: hours
-    });
-  };
-
-  const handleAddDay = () => {
-    if (newDay && !availability[newDay]) {
-      setAvailability((prev: any) => ({
-        ...prev,
-        [newDay]: ''
-      }));
-      setNewDay('');
-    } else {
-      setAlerror('The schedule for this day is already defined')
-      setTimeout(() => {
-        setAlerror(null);
-      }, 5000);
-    }
-  };
-
-  const handleRemoveDay = (day: string) => {
-    setAvailability((prev: any) => {
-      const newAvailability = { ...prev };
-      delete newAvailability[day];
-      return newAvailability;
-    });
-  };
-
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -227,7 +197,6 @@ const ProfileU = () => {
                   <div className="btn-container">
                     <Button onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="red" onClick={handleDeletePhoto}><FontAwesomeIcon icon={faTrash} /> Delete</Button>
                     <FileInput onChange={handlePhotoChange} />
-
                   </div>
                   <Button onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="green" onClick={saveChange}><FontAwesomeIcon icon={faSave} />Save</Button>
                 </div>

@@ -54,6 +54,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 25%;
 }
 
 .profileu .btn-container {
@@ -192,4 +193,31 @@
   border: 1px solid #f5c6cb;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 640px) {
+  .profileu form {
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+  }
+  .profileu .round-image-container {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 0;
+  }
+  .profileu .modal-footer {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .profileu .resize {
+    width: 300px;
+    height: 300px;
+  }
+  .profileu .title {
+    font-size: 2rem;
+  }
+  .profileu .paragraph {
+    font-size: 1rem;
+  }
 }
