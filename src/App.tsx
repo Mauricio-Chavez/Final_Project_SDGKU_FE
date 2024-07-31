@@ -15,6 +15,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Profile from './pages/content/Profile/Profile';
 import SidebarTutor from './components/sidebar';
 import HomeTutor from './pages/content/HomeTutor/HomeTutor';
+import ProfileU from './pages/users/ProfileU';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -33,23 +35,33 @@ function App() {
 
   const renderCertifications = () => {
     if (user?.role === 1) return <UploadCertifications />;
-    if (user?.role === 0) return <Home/>;
+    if (user?.role === 0) return <Home />;
+    return <h1>Admin</h1>;
+  };
+  const renderProfile = () => {
+    if (user?.role === 1) return <Profile />;
+    if (user?.role === 0) return <ProfileU />;
     return <h1>Admin</h1>;
   };
   const renderNav = () => {
     if (user?.role === 1) return <SidebarTutor />; else return <Navbar />;
   };
+  const renderFooter = () => {
+    if (user?.role === 0) return <Footer />;
+  };
+
+  const appClass = user?.role === 1 ? 'with-sidebar' : 'with-navbar';
 
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className={`App ${appClass}`}>
         {
           token ? renderNav() : null
         }
         <Routes>
           <Route path='/' element={token ? renderHome() : <Login />} />
           <Route path='/home' element={token ? renderHome() : <Login />} />
-          <Route path='/profile' element={token ? <Profile /> : <Login />} />
+          <Route path='/profile' element={token ? renderProfile() : <Login />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/upload-certifications' element={token ? renderCertifications() : <Login />} />
@@ -58,6 +70,9 @@ function App() {
           <Route path='/details-tutor/:id' element={token ? <DetailsTutor /> : <Login />} />
         </Routes>
 
+        {
+          renderFooter()
+        }
       </div>
     </BrowserRouter>
   );

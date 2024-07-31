@@ -25,7 +25,7 @@ const BookingPage = () => {
       <h1>Booking</h1>
       <div className="cards-container">
         {
-          bookings.filter(meet => new Date(meet.end_time) >= currentDate).map((meet) => {
+          bookings.filter(meet => new Date(meet.end_time) >= currentDate).sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime()).map((meet) => {
             return (
               <BookingCard meet={meet} />
             );

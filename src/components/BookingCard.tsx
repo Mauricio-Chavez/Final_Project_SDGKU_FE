@@ -10,19 +10,23 @@ import useGlobalState from "../context/GlobalState";
 
 const BookingCard = ({ meet }: any) => {
   const { user } = useGlobalState.getState();
-  const formattedDateStart = format(new Date(meet.start_time), 'PPPpp');
-  const formattedDateEnd = format(new Date(meet.end_time), 'PPPpp');
+  // date
+  const formattedDateStart = format(new Date(meet.start_time), 'PPP');
+
+  // hour
+  const formattedTimeStart = format(new Date(meet.start_time), 'p');
+  const formattedTimeEnd = format(new Date(meet.end_time), 'p');
   const handleClick = () => {
     window.open(`${meet.meeting_link}`, '_blank');
   };
   return (
-    <Card className="mt-6 w-96" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-      <CardBody placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-        <Typography variant="h5" color="blue-gray" className="mb-2" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+    <Card className="mt-1 w-80" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+      <CardBody className="p-3 pb-1" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+        <Typography variant="h5" color="blue-gray" className="mb-1" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
           Summary: {meet.summary}
         </Typography>
         <Typography placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-          {formattedDateStart} <br /> to <br /> {formattedDateEnd}
+          {formattedDateStart} : {formattedTimeStart} - {formattedTimeEnd}
           {user && user.role === 0 && (
             <>
               <br />Tutor email: {meet.attendees[0]}
@@ -35,8 +39,8 @@ const BookingCard = ({ meet }: any) => {
           )}
         </Typography>
       </CardBody>
-      <CardFooter className="pt-0" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-        <Button onClick={handleClick} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>Go Meeting</Button>
+      <CardFooter className="p-3 pt-0 mt-0" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+        <Button onClick={handleClick} className="bg-[#70000e] p-2" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>Go Meeting</Button>
       </CardFooter>
     </Card>
   );
