@@ -81,7 +81,7 @@ const BookingForm = ({ tutor }: any) => {
       const res = await TutorService.createBooking(bookingData);
       if (res) {
         alert('User created successfully');
-        navigate('/bookings');
+        navigate('/');
       } else {
         alert('Error creating user');
       }

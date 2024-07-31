@@ -18,9 +18,6 @@ const Footer: React.FC = () => {
             <li>
               <Link to="/profile" className="hover:underline me-4 md:me-6">Profile</Link>
             </li>
-            <li>
-              <Link to="/bookings" className="hover:underline me-4 md:me-6">Tutorings</Link>
-            </li>
           </ul>
         </div>
         <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 Tutoring Hub™. All Rights Reserved. By Chavez Mauricio & Ugalde Fernanda</span>
