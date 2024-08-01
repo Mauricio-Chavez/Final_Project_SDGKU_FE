@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import './Footer.css';
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-white rounded-lg shadow dark:bg-gray-900 mt-5 mb-0 w-full">
-      <div className="w-full max-w-screen-2xl mx-auto md:py-8">
+      <div className="w-full max-w-[95%] mx-auto md:py-8">
         <hr className="my-1 border-[#70000e] sm:mx-auto dark:border-[#70000e] lg:my-2" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <Link to="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">

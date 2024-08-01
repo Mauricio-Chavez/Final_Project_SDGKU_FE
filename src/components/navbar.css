@@ -47,7 +47,7 @@ header {
   display: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   header {
     flex-direction: row;
     height: max-content;

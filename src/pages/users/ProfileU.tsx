@@ -24,7 +24,6 @@ const ProfileU = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false)
   const [availability, setAvailability] = useState<any>(user?.availability || {});
-  const [newDay, setNewDay] = useState('');
   const [alsuccess, setAlsuccess] = useState<string | null>(null)
   const [alerror, setAlerror] = useState<string | null>(null)
 

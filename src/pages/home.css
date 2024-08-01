@@ -2,6 +2,7 @@
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  min-height: calc(100vh - 270px);
 }
 .cards-container {
   display: flex;
@@ -89,7 +90,7 @@
   padding: 0 0.5rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .meetings-list {
     position: fixed;
     bottom: 0;

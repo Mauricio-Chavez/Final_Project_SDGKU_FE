@@ -20,10 +20,14 @@ class TutorService {
     }
   }
 
-  async getCertifications(): Promise<any>{
+  async getCertifications(id: any = null): Promise<any>{
     try {
       const { user } = useGlobalState.getState();
       console.log('user', user);
+      if (id){
+        const response: AxiosResponse = await axios.get(`http://localhost:8000/api/view_certifications/${id}`);
+        return response.data;
+      }
       if (!user || !user.id) {
         throw new Error('User is not logged in or missing user ID');
       }
