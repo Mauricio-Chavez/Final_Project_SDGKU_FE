@@ -19,7 +19,8 @@ const Register = () => {
 
   const [photo, setPhoto] = useState<File | null>(null);
   const photoInputRef = useRef<HTMLInputElement | null>(null);
-  const submitButtonRef = useRef<HTMLInputElement | null>(null); // Ref para el hidden submit button
+  const submitButtonRef = useRef<HTMLInputElement | null>(null);
+  const [alerror,setAlerror] = useState<string | null>(null)
 
   const handlePhoto = (e: any) => {
     const selectedPhoto = e.target.files[0];
@@ -44,14 +45,18 @@ const Register = () => {
     try {
       const res = await authService.register(formData);
       if (res.token) {
-        alert('User created successfully');
         navigate('/login');
       } else {
-        alert('Error creating user');
+        setAlerror('Error creating user')
+        setTimeout(() => {
+          setAlerror(null);
+      }, 5000);
       }
     } catch (error) {
-      console.error('Register error', error);
-      alert('Error creating user');
+      setAlerror('Error creating user' + error)
+      setTimeout(() => {
+        setAlerror(null);
+    }, 5000);
     }
   };
 
@@ -59,6 +64,16 @@ const Register = () => {
 
   return (
     <div className='user-register'>
+      <div className="alerts-container">
+        {errors.email && <span className="alert">{errors.email.message}</span>}
+        {errors.password && <span className="alert">{errors.password.message}</span>}
+        {errors.first_name && <span className="alert">{errors.first_name.message}</span>}
+        {errors.last_name && <span className="alert">{errors.last_name.message}</span>}
+        {errors.role && <span className="alert">{errors.role.message}</span>}
+        {errors.study_area && <span className="alert">{errors.study_area.message}</span>}
+        {errors.gender && <span className="alert"></span>}
+        {alerror ? <span className="alert">{alerror}</span> : null}
+      </div>
       <div className='img-container'>
         <img src={`${process.env.PUBLIC_URL}/media/logo.png`} alt="" />
       </div>
@@ -83,7 +98,7 @@ const Register = () => {
               onPointerEnterCapture={() => { }}
               onPointerLeaveCapture={() => { }}
             />
-            {errors.email && <span>{errors.email.message}</span>}
+
 
             <Input
               label='Password'
@@ -95,7 +110,7 @@ const Register = () => {
               onPointerEnterCapture={() => { }}
               onPointerLeaveCapture={() => { }}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+      
 
             <Input
               label='First Name'
@@ -107,7 +122,7 @@ const Register = () => {
               onPointerEnterCapture={() => { }}
               onPointerLeaveCapture={() => { }}
             />
-            {errors.first_name && <span>{errors.first_name.message}</span>}
+    
 
             <Input
               label='Last Name'
@@ -119,7 +134,7 @@ const Register = () => {
               onPointerEnterCapture={() => { }}
               onPointerLeaveCapture={() => { }}
             />
-            {errors.last_name && <span>{errors.last_name.message}</span>}
+
 
             <Select
               label='Gender'
@@ -135,7 +150,7 @@ const Register = () => {
                 </Option>
               ))}
             </Select>
-            {errors.gender && <span>{errors.gender.message}</span>}
+
 
             <Select
               label='Select Study Area'
@@ -151,7 +166,7 @@ const Register = () => {
                 </Option>
               ))}
             </Select>
-            {errors.study_area && <span>{errors.study_area?.message}</span>}
+
             
             <div className='radio-container'>
               <Radio
@@ -181,7 +196,7 @@ const Register = () => {
                 color='amber'
               />
             </div>
-            {errors.role && <span>{errors.role.message}</span>}
+
             <input
               type="file"
               name='photo'

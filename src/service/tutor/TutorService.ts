@@ -46,7 +46,6 @@ class TutorService {
   async getBookings(): Promise<any>{
     try {
       const { user } = useGlobalState.getState();
-      console.log('user', user);
       if (!user || !user.id) {
         throw new Error('User is not logged in or missing user ID');
       }
