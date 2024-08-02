@@ -10,6 +10,7 @@ import './TutorCard.css';
 const TutorCard = ({ tutor }: any) => {
     const navigate = useNavigate();
     const handleClick = () => {
+        console.log(tutor.id)
         navigate(`/details-tutor/${tutor.id}`);
     };
 
