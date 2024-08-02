@@ -31,20 +31,12 @@ const DetailsTutor = () => {
     const res = await authService.getTutors();
     const tutorDetails = res.filter((t: { id: number; }) => t.id === parseInt(id ?? ""));
     setTutor(tutorDetails[0]);
+    setLoading(false);
   }
   useEffect(() => {
     getTutor()
   }, [id]);
 
-  const renderAvailability = (availability: string) => {
-    if (!availability) return null;
-
-    return Object.entries(availability).map(([day, hours]) => (
-      <div key={day}>
-        <strong>{day}:</strong> {hours} &nbsp;
-      </div>
-    ));
-  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,7 +67,26 @@ const DetailsTutor = () => {
       }
     };
     fetchCertifications();
-  }, []);
+  }, [tutor]);
+
+  const renderAvailability = (availability: any) => {
+    if (!availability) return null;
+
+    return Object.entries(availability).map(([day, hours]) => {
+      const hoursArray = typeof hours === 'string' ? hours.split(',') : hours as string[];
+
+      return (
+        <li className="cont-text mb-2">
+          <strong>{day}:</strong>
+          <ul>
+            {hoursArray.map((hour) => (
+              <li>{hour}</li>
+            ))}
+          </ul>
+        </li>
+      );
+    });
+  };
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -144,7 +155,7 @@ const DetailsTutor = () => {
                 onPointerLeaveCapture={() => { }}>Book the session</Button>
             </PopoverHandler>
             <PopoverContent className="modal-meet overflow-auto px-16 py-12
-             md:ml-4  border-[#4b0007]" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+            md:ml-4  border-[#4b0007]" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
               <Typography variant="h4" color="blue-gray" className="mb-4 text-[#ce9912] text-2xl font-bold" placeholder=''
                 onPointerEnterCapture={() => { }}
                 onPointerLeaveCapture={() => { }}>
@@ -174,7 +185,9 @@ const DetailsTutor = () => {
             </div>
             <div className="cont-text">
               <h2><b>Availability:</b></h2>
-              <h2><span className="text-data">{renderAvailability(tutor.availability)}</span></h2>
+              <ul>
+                {renderAvailability(tutor.availability)}
+              </ul>
             </div>
           </div>
         </div>

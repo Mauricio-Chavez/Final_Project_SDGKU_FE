@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment-timezone';
 import useGlobalState from '../context/GlobalState';
 import TutorService from '../service/tutor/TutorService';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
 import { Input, Button } from '@material-tailwind/react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const TimezoneSelect = ({ onChange }: { onChange: (selectedOption: any) => void }) => {
   const timezones = moment.tz.names().map(tz => ({
@@ -22,9 +22,24 @@ const TimezoneSelect = ({ onChange }: { onChange: (selectedOption: any) => void 
   );
 };
 
+const getDisabledDays = (availability: any) => {
+  const dayMapping: { [key: string]: number } = {
+    "Sunday": 0,
+    "Monday": 1,
+    "Tuesday": 2,
+    "Wednesday": 3,
+    "Thursday": 4,
+    "Friday": 5,
+    "Saturday": 6,
+  };
+
+  const disabledDays = Object.keys(dayMapping).filter(day => !availability[day]).map(day => dayMapping[day]);
+  return disabledDays;
+};
+
 const BookingForm = ({ tutor }: any) => {
   const { user } = useGlobalState.getState();
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<any>();
+  const { register, handleSubmit, formState: { errors } } = useForm<any>();
   const [formData, setFormData] = useState({
     tutor_id: tutor.id,
     user_id: user?.id,
@@ -36,15 +51,51 @@ const BookingForm = ({ tutor }: any) => {
     cardholder_name: '',
     card_number: '',
     expiration_date: '',
-    cvv: ''
+    cvv: '',
+    total_time: '',
   });
   const navigate = useNavigate();
+  const [disabledDays, setDisabledDays] = useState<number[]>([]);
+
+  useEffect(() => {
+    setDisabledDays(getDisabledDays(tutor.availability));
+  }, [tutor.availability]);
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const date = new Date(event.target.value);
+    const day = date.getDay();
+    console.log(disabledDays);
+    if (disabledDays.includes(day)) {
+      alert('This day is disabled');
+    } else {
+      handleChange(event);
+    }
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.name === 'start_time') {
+      const startHour = new Date(e.target.value).getHours();
+      const minutes = new Date(e.target.value).getMinutes();
+      let endHour = startHour + Number(formData.total_time);
+
+      if (endHour >= 24) {
+        endHour -= 24;
+      }
+
+      const [day] = e.target.value.split('T');
+      const endTime = `${day}T${endHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+      console.log(endTime);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        end_time: endTime,
+      }));
+    }
   };
 
   const handleTimezoneChange = (selectedOption: { value: any; }) => {
@@ -103,12 +154,26 @@ const BookingForm = ({ tutor }: any) => {
         </div>
         <div>
           <Input
+            label="How many hours?"
+            type="number"
+            {...register('total_time', { required: 'Total time is required' })}
+            name="total_time"
+            value={formData.total_time}
+            onChange={handleChange}
+            required
+            crossOrigin=''
+            onPointerEnterCapture={() => { }}
+            onPointerLeaveCapture={() => { }}
+          />
+        </div>
+        <div>
+          <Input
             label="Start Time"
             type="datetime-local"
             {...register('start_time', { required: 'Start time is required' })}
             name="start_time"
             value={formData.start_time}
-            onChange={handleChange}
+            onChange={handleDateChange}
             required
             crossOrigin=''
             onPointerEnterCapture={() => { }}
@@ -117,23 +182,23 @@ const BookingForm = ({ tutor }: any) => {
           {errors.start_time && <span className="text-red-500">This field is required</span>}
         </div>
         <div>
+          <TimezoneSelect onChange={handleTimezoneChange} />
+          {errors.timezone && <span className="text-red-500">This field is required</span>}
+        </div>
+        <div>
           <Input
-            label="End Time"
-            type="datetime-local"
-            {...register('end_time', { required: 'End time is required' })}
-            name="end_time"
-            value={formData.end_time}
-            onChange={handleChange}
+            label="Total to Pay"
+            type="text"
+            {...register('total_pay')}
+            name="cardholder_name"
+            value={Number(formData.total_time) * Number(tutor.hourly_rate)}
+            readOnly
             required
             crossOrigin=''
             onPointerEnterCapture={() => { }}
             onPointerLeaveCapture={() => { }}
           />
-          {errors.end_time && <span className="text-red-500">This field is required</span>}
-        </div>
-        <div>
-          <TimezoneSelect onChange={handleTimezoneChange} />
-          {errors.timezone && <span className="text-red-500">This field is required</span>}
+          {errors.cardholder_name && <span className="text-red-500">This field is required</span>}
         </div>
         <div>
           <Input

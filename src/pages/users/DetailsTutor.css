@@ -47,6 +47,9 @@
   display: flex;
   text-align: justify !important;
 }
+.cont-text li {
+  text-align: start;
+}
 
 .details .cert {
   flex: 1;
