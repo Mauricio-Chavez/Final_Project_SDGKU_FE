@@ -33,6 +33,9 @@ const getDisabledDays = (availability: any) => {
     "Saturday": 6,
   };
 
+  if (availability === null) {
+    return [];
+  }
   const disabledDays = Object.keys(dayMapping).filter(day => !availability[day]).map(day => dayMapping[day]);
   return disabledDays;
 };
