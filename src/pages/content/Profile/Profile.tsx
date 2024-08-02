@@ -5,7 +5,7 @@ import useGlobalState from "../../../context/GlobalState";
 import authService from "../../../service/auth.service";
 import './Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faX,faSave, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faX, faSave, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 import FileInput from "../../../components/FileInput/FileInput";
 import profileService from "../../../service/profile.service";
 
@@ -26,9 +26,12 @@ const Profile = () => {
     const [isDelete, setIsDelete] = useState(false)
     const [availability, setAvailability] = useState<any>(user?.availability || {});
     const [newDay, setNewDay] = useState('');
-    const [alsuccess,setAlsuccess] = useState<string | null>(null)
-    const [alerror,setAlerror] = useState<string | null>(null)
-    
+    const [newStartTime, setNewStartTime] = useState('');
+    const [newEndTime, setNewEndTime] = useState('');
+    const [alsuccess, setAlsuccess] = useState<string | null>(null)
+    const [alerror, setAlerror] = useState<string | null>(null)
+    const dayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
 
 
     useEffect(() => {
@@ -78,7 +81,7 @@ const Profile = () => {
         setPhotoPreview(null)
         setIsDelete(true)
     }
-    const closeModal=()=>{
+    const closeModal = () => {
         setPhotoPreview(`http://localhost:8000${user?.photo}`)
         toggleModal()
     }
@@ -99,7 +102,7 @@ const Profile = () => {
                 setTimeout(() => {
                     setAlerror(null);
                 }, 5000);
-                
+
             }
         } else {
             if (photo && photo[0]) {
@@ -142,7 +145,7 @@ const Profile = () => {
         if (newDay && !availability[newDay]) {
             setAvailability((prev: any) => ({
                 ...prev,
-                [newDay]: ''
+                [newDay]: prev[newDay] || []
             }));
             setNewDay('');
         } else {
@@ -153,10 +156,33 @@ const Profile = () => {
         }
     };
 
+    const handleAddTimeSlot = () => {
+        if (newDay && newStartTime && newEndTime) {
+            const newSlot = `${newStartTime} - ${newEndTime}`;
+            setAvailability((prev: any) => ({
+                ...prev,
+                [newDay]: prev[newDay] ? [...prev[newDay], newSlot] : [newSlot]
+            }));
+            setNewStartTime('');
+            setNewEndTime('');
+        }
+    };
+
     const handleRemoveDay = (day: string) => {
         setAvailability((prev: any) => {
             const newAvailability = { ...prev };
             delete newAvailability[day];
+            return newAvailability;
+        });
+    };
+
+    const handleRemoveTimeSlot = (day: string, index: number) => {
+        setAvailability((prev: any) => {
+            const newAvailability = { ...prev };
+            newAvailability[day].splice(index, 1);
+            if (newAvailability[day].length === 0) {
+                delete newAvailability[day];
+            }
             return newAvailability;
         });
     };
@@ -201,6 +227,8 @@ const Profile = () => {
         setIsModalOpen(!isModalOpen);
     };
 
+    const sortedDays = dayOrder.filter(day => availability[day]);
+
     return (
         <div className="profile">
             <div className="alerts-container">
@@ -217,9 +245,9 @@ const Profile = () => {
                             </div>
                             <div className="relative round-image-container">
                                 {photoPreview ? (
-                                    <img className="round-image" src={photoPreview}/>
+                                    <img className="round-image" src={photoPreview} />
                                 ) : (
-                                    <FontAwesomeIcon icon={faUser} className="edit-icon" size="10x" color="#b5b5b5"/>
+                                    <FontAwesomeIcon icon={faUser} className="edit-icon" size="10x" color="#b5b5b5" />
                                 )}
                             </div>
                             <div className="btns-container">
@@ -228,7 +256,7 @@ const Profile = () => {
                                     <div className="btn-container">
                                         <Button onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="red" onClick={handleDeletePhoto}><FontAwesomeIcon icon={faTrash} /> Delete</Button>
                                         <FileInput onChange={handlePhotoChange} />
-                                        
+
                                     </div>
                                     <Button onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="green" onClick={saveChange}><FontAwesomeIcon icon={faSave} />Save</Button>
                                 </div>
@@ -260,16 +288,16 @@ const Profile = () => {
             </div>
             <form onSubmit={handleUpdate}>
                 <div className="general-info">
-                <Typography
-                    variant="h4"
-                    className='title-section'
-                    color="white"
-                    placeholder=''
-                    onPointerEnterCapture={() => { }}
-                    onPointerLeaveCapture={() => { }}
-                >
-                    General Information
-                </Typography>
+                    <Typography
+                        variant="h4"
+                        className='title-section'
+                        color="white"
+                        placeholder=''
+                        onPointerEnterCapture={() => { }}
+                        onPointerLeaveCapture={() => { }}
+                    >
+                        General Information
+                    </Typography>
                     <div className="first-container-general">
                         <div className="name-container">
                             <Input
@@ -285,15 +313,15 @@ const Profile = () => {
                                 crossOrigin=''
                             />
                             <Input
-                            label="Last Name"
-                            type="text"
-                            name="last_name"
-                            value={lastName}
-                            placeholder="Last Name"
-                            onChange={handleInputChange}
-                            onPointerEnterCapture={() => { }}
-                            onPointerLeaveCapture={() => { }}
-                            crossOrigin=''
+                                label="Last Name"
+                                type="text"
+                                name="last_name"
+                                value={lastName}
+                                placeholder="Last Name"
+                                onChange={handleInputChange}
+                                onPointerEnterCapture={() => { }}
+                                onPointerLeaveCapture={() => { }}
+                                crossOrigin=''
                             />
                             <Select
                                 label='Study Area'
@@ -312,14 +340,14 @@ const Profile = () => {
                         </div>
                         <div className="round-image-container resize" onClick={toggleModal}>
                             {photoPreview ? (
-                                <img className="round-image" src={photoPreview}/>
+                                <img className="round-image" src={photoPreview} />
                             ) : (
-                                <FontAwesomeIcon icon={faUser} className="edit-icon" size="5x" color="#b5b5b5"/>
+                                <FontAwesomeIcon icon={faUser} className="edit-icon" size="5x" color="#b5b5b5" />
                             )}
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
                 <div className="academic-container">
                     <Typography
@@ -332,7 +360,7 @@ const Profile = () => {
                     >
                         Academic Speciality
                     </Typography>
-                    <div className="academic-info"> 
+                    <div className="academic-info">
                         <Input
                             label="Specialties"
                             type="text"
@@ -370,37 +398,29 @@ const Profile = () => {
                 </div>
                 <div className="availability-section">
                     <Typography
-                            variant="h4"
-                            className='title-section'
-                            color="white"
-                            placeholder=''
-                            onPointerEnterCapture={() => { }}
-                            onPointerLeaveCapture={() => { }}
+                        variant="h4"
+                        className='title-section'
+                        color="white"
+                        placeholder=''
+                        onPointerEnterCapture={() => { }}
+                        onPointerLeaveCapture={() => { }}
                     >
                         Availability
                     </Typography>
                     <div className="availability-container">
                         <div className="availability-info">
-                            {Object.keys(availability).map((day) => (
-                                <div key={day} className="day-container">
-                                    <Input
-                                        label="Day"
-                                        type="text"
-                                        value={day}
-                                        crossOrigin=''
-                                        onPointerEnterCapture={() => { }}
-                                        onPointerLeaveCapture={() => { }}
-                                    />
-                                    <Input
-                                        label="Hours (please 24 hours format)"
-                                        type="text"
-                                        value={availability[day]}
-                                        onChange={(e) => handleAvailabilityChange(day, e.target.value)}
-                                        crossOrigin=''
-                                        onPointerEnterCapture={() => { }}
-                                        onPointerLeaveCapture={() => { }}
-                                    />
-                                    <Button onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="red" onClick={() => handleRemoveDay(day)}><FontAwesomeIcon icon={faTrash} /></Button>
+                            {sortedDays.map((day) => (
+                                <div className="day-availability">
+                                    <div key={day} className="day-container">
+                                        <Typography variant="h6" color="blue-gray" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>{day}</Typography>
+                                        {availability[day].map((slot: string, index: number) => (
+                                            <div key={index} className="time-slot">
+                                                <span>{slot}</span>
+                                                <Button className="ml-1" size="sm" color="red" onClick={() => handleRemoveTimeSlot(day, index)} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} ><FontAwesomeIcon icon={faTrash} /></Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Button className=".btn-rem-day h-10 w-36" color="red" onClick={() => handleRemoveDay(day)} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}><FontAwesomeIcon icon={faTrash} /> Remove Day</Button>
                                 </div>
                             ))}
                         </div>
@@ -419,12 +439,14 @@ const Profile = () => {
                                     </Option>
                                 ))}
                             </Select>
-                            <Button onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="green" onClick={handleAddDay}><FontAwesomeIcon icon={faPlus}/></Button>
+                            <Input type="time" label="Start Time" value={newStartTime} onChange={(e) => setNewStartTime(e.target.value)} crossOrigin='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} />
+                            <Input type="time" label="End Time" value={newEndTime} onChange={(e) => setNewEndTime(e.target.value)} crossOrigin='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} />
+                            <Button className="btn-add-day" color="light-green" onClick={handleAddTimeSlot} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}><FontAwesomeIcon icon={faPlus} /></Button>
                         </div>
                     </div>
                 </div>
-                <div className="btn-cont"> 
-                    <Button className="btn-save" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="green" type="submit"><FontAwesomeIcon icon={faSave}/> Save</Button>
+                <div className="btn-cont">
+                    <Button className="btn-save" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} placeholder='' color="green" type="submit"><FontAwesomeIcon icon={faSave} /> Save</Button>
                 </div>
             </form>
         </div>
