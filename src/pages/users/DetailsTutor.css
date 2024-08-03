@@ -94,4 +94,11 @@
   .modal-meet {
     width: 90%;
   }
+  .tutor-data {
+    gap: 0.5rem;
+  }
+  .tutor-data .cont-text {
+    flex-direction: column;
+    text-align: start;
+  }
 }

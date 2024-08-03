@@ -155,7 +155,7 @@ const DetailsTutor = () => {
                 onPointerLeaveCapture={() => { }}>Book the session</Button>
             </PopoverHandler>
             <PopoverContent className="modal-meet overflow-auto px-16 py-12
-            md:ml-4  border-[#4b0007]" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+            md:ml-4 md:top-1/2 md:left-1/2 md:transform md:-translate-x-0 md:-translate-y-1/2 border-[#4b0007]" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
               <Typography variant="h4" color="blue-gray" className="mb-4 text-[#ce9912] text-2xl font-bold" placeholder=''
                 onPointerEnterCapture={() => { }}
                 onPointerLeaveCapture={() => { }}>
