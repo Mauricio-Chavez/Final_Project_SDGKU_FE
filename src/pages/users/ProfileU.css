@@ -203,8 +203,8 @@
     align-items: center;
   }
   .profileu .round-image-container {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     margin-bottom: 0;
   }
   .profileu .modal-footer {
@@ -212,8 +212,8 @@
     gap: 1rem;
   }
   .profileu .resize {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
   }
   .profileu .title {
     font-size: 2rem;
