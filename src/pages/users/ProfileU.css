@@ -197,11 +197,20 @@
 }
 
 @media (max-width: 768px) {
+  .profileu {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .profileu form {
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     align-items: center;
   }
+  .profileu .info-form {
+    width: 100%;
+  }
+
   .profileu .round-image-container {
     width: 200px;
     height: 200px;
