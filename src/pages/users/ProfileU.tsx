@@ -172,6 +172,7 @@ const ProfileU = () => {
     obj.append('experience', experience);
     obj.append('availability', JSON.stringify(availability));
 
+
     try {
       await authService.updateUserInfo(obj);
       setUser({

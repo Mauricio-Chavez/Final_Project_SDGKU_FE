@@ -1,0 +1,54 @@
+.hometutor{
+    width: 100%;
+}
+.hometutor .title{
+    margin-top: 3rem;
+    color: var(--secondary);
+}
+.hometutor .btn-container{
+    width: 90%;
+    display: flex;
+    justify-content: right;
+}
+
+.hometutor .alerts-container{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+.hometutor .alert-success{
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hometutor .alert-error{
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.hometutor a{
+    background-color: #059e29;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    
+}
+
+
+@media (max-width: 768px) {
+    .hometutor .graphics-container{
+        margin: 0 auto;
+    }
+}
