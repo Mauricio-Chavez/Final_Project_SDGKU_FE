@@ -419,7 +419,7 @@ const Profile = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    <Button className=".btn-rem-day h-10 w-36" color="red" onClick={() => handleRemoveDay(day)} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}><FontAwesomeIcon icon={faTrash} /> Remove Day</Button>
+                                    <Button className=".btn-rem-day h-10 w-36" color="red" onClick={() => handleRemoveDay(day)} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}><FontAwesomeIcon icon={faTrash} /> Day</Button>
                                 </div>
                             ))}
                         </div>
@@ -440,7 +440,7 @@ const Profile = () => {
                             </Select>
                             <Input type="time" label="Start Time" value={newStartTime} onChange={(e) => setNewStartTime(e.target.value)} crossOrigin='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} />
                             <Input type="time" label="End Time" value={newEndTime} onChange={(e) => setNewEndTime(e.target.value)} crossOrigin='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} />
-                            <Button className="btn-add-day" color="light-green" onClick={handleAddTimeSlot} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}><FontAwesomeIcon icon={faPlus} /></Button>
+                            <Button className="btn-add-day" onClick={handleAddTimeSlot} placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}><FontAwesomeIcon icon={faPlus} /></Button>
                         </div>
                     </div>
                 </div>

@@ -117,7 +117,11 @@ const HomeTutor = () => {
           style={{
             borderBottom: activeSection === 'gender' ? '2px solid #dd971a' : 'none',
             padding: '10px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            textTransform:'uppercase',
+            letterSpacing: '2px',
+            fontWeight: '500',
+            color: '#4b0007'
           }}
         >
           Gender
@@ -127,7 +131,11 @@ const HomeTutor = () => {
           style={{
             borderBottom: activeSection === 'studyArea' ? '2px solid #dd971a' : 'none',
             padding: '10px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            textTransform:'uppercase',
+            letterSpacing: '2px',
+            fontWeight: '500',
+            color: '#4b0007'
           }}
         >
           Study Area
