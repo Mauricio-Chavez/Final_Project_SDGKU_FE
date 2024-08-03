@@ -7,9 +7,12 @@ import {
 } from "@material-tailwind/react";
 import { format } from 'date-fns';
 import useGlobalState from "../context/GlobalState";
+import { useState } from "react";
 
 const BookingCard = ({ meet }: any) => {
   const { user } = useGlobalState.getState();
+  const [currentDate, setcurrentDate] = useState(new Date());
+  const [end , setEnd] = useState(new Date(meet.end_time));
   // date
   const formattedDateStart = format(new Date(meet.start_time), 'PPP');
 
@@ -40,7 +43,7 @@ const BookingCard = ({ meet }: any) => {
         </Typography>
       </CardBody>
       <CardFooter className="p-3 pt-0 mt-0" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-        <Button onClick={handleClick} className="bg-[#70000e] p-2" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>Go Meeting</Button>
+        <Button disabled={end<currentDate} onClick={handleClick} className="bg-[#70000e] p-2" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>{ end >= currentDate ? 'Go meeting' : 'Meeting Ended'}</Button>
       </CardFooter>
     </Card>
   );

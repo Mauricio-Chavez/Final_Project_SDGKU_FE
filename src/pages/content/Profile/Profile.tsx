@@ -189,7 +189,6 @@ const Profile = () => {
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         const obj = new FormData();
         obj.append('first_name', firstName);
         obj.append('last_name', lastName);
