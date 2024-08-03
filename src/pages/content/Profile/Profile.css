@@ -84,6 +84,12 @@
   display: flex;
   flex-direction: column;
 }
+.profile .btn-add-day{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4CAF50;
+}
 .profile .first-container-general {
   display: flex;
   flex-direction: row;
@@ -161,7 +167,7 @@
   height: 2.5rem;
 }
 .profile .add-day .btn-rem-day {
-  rigth: 0;
+  right: 0;
   max-height: 2.5rem;
   line-height: 2.5rem;
   box-sizing: border-box;
@@ -242,6 +248,10 @@
     flex-direction: column;
     width: 90%;
     margin: 0 auto;
+    gap: 0.2rem;
+  }
+  .profile .day-availability {
+    align-items: center;
   }
   .profile .add-day {
     flex-direction: column;

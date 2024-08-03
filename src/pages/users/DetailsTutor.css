@@ -29,7 +29,7 @@
 }
 .modal-meet {
   width: 50%;
-  max-height: 55vh;
+  max-height: 80vh;
 }
 .tutor-data {
   display: flex;
@@ -79,7 +79,12 @@
   object-fit: cover;
   border-radius: 50%;
 }
-
+.details .img-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 @media (max-width: 768px) {
   .details {
     flex-direction: column;

@@ -116,7 +116,7 @@ const DetailsTutor = () => {
         </div>
       );
     } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension || '')) {
-      return <img src={fileUrl} alt="Certification" style={{ maxWidth: '600px' }} />;
+      return <div className="img-container"><img src={fileUrl} alt="Certification" style={{ maxWidth: '600px' }} /></div>
     } else {
       return <a href={fileUrl} target="_blank" rel="noopener noreferrer">Download</a>;
     }
@@ -146,7 +146,8 @@ const DetailsTutor = () => {
               <div className='bg-[#ECECEC] rounded-full w-7 h-7'><FontAwesomeIcon icon={faUser} className="edit-icon" size="1x" color='#b5b5b5' /></div>
             )}
           </div>
-          <Popover placement="bottom">
+          <div>
+            <Popover placement="top">
             <PopoverHandler>
               <Button
                 className="bg-[#70000e]"
@@ -155,7 +156,7 @@ const DetailsTutor = () => {
                 onPointerLeaveCapture={() => { }}>Book the session</Button>
             </PopoverHandler>
             <PopoverContent className="modal-meet overflow-auto px-16 py-12
-            md:ml-4  border-[#4b0007]" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
+            md:ml-4 border-[#4b0007] fixed top-1/2 left-1/2 transform -translate-x-0 -translate-y-3/4" placeholder='' onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
               <Typography variant="h4" color="blue-gray" className="mb-4 text-[#ce9912] text-2xl font-bold" placeholder=''
                 onPointerEnterCapture={() => { }}
                 onPointerLeaveCapture={() => { }}>
@@ -164,6 +165,7 @@ const DetailsTutor = () => {
               <BookingForm tutor={tutor} />
             </PopoverContent>
           </Popover>
+          </div>
           <br />
           <div className="tutor-data">
             <div className="cont-text ">
